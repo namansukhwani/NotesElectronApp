@@ -10,7 +10,11 @@ function createWindow(){
         protocol:'file:',
         slashes:true,
     });
-    mainWindow=new BrowserWindow({width:800,height:600});
+    mainWindow=new BrowserWindow({
+        width:800,
+        height:600,
+    });
+    mainWindow.setMenuBarVisibility(false);
     mainWindow.loadURL(startUrl);
     mainWindow.on('closed',()=>{
         mainWindow==null;
