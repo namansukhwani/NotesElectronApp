@@ -6,7 +6,7 @@ import '../App.css';
 function Header(){
     const styles=useStyles();
     return(
-           <AppBar elevation={1} position="static" className={styles.appBar}>
+           <AppBar elevation={1} position="fixed" className={styles.appBar}>
                 <Toolbar className={styles.toolbar}>
                     <img src={require('../shared/images/notesLogo.png')} alt=" " width="45" height="45" />
                     <Typography variant="h5" className={styles.headerTitle}>
@@ -62,6 +62,7 @@ const useStyles=makeStyles({
     },
     settingButton:{
         marginLeft:'auto',
+        color:'#000000'
     }
 })
 

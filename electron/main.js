@@ -15,6 +15,7 @@ function createWindow(){
         height:600,
     });
     mainWindow.setMenuBarVisibility(false);
+    mainWindow.setBackgroundColor('#f5f5f5')
     mainWindow.loadURL(startUrl);
     mainWindow.on('closed',()=>{
         mainWindow==null;
