@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {Container,Button,makeStyles,Grid, Card,CardContent,CardActions, Typography,IconButton,Slide,Collapse} from '@material-ui/core';
+import {Container,Button,makeStyles,Grid, Card,CardContent,CardActions, Typography,IconButton,Slide,Snackbar,CircularProgress,Tooltip,Zoom} from '@material-ui/core';
 import {Add,Edit,Favorite,Delete,Close} from '@material-ui/icons';
 import {Alert} from '@material-ui/lab';
 import {NavLink} from 'react-router-dom';
@@ -32,15 +32,21 @@ function CardView({note,setAlert}){
                     <Typography className={styles.cardText}>{note.title}</Typography>
                 </CardContent>
                 <CardActions >
-                    <IconButton aria-label="Add  Favorite">
-                        <Favorite style={{color:'red'}}/>
-                    </IconButton>
+                    <Tooltip TransitionComponent={Zoom} title="Add To Favorites">
+                        <IconButton aria-label="Add Favorite">
+                            <Favorite style={{color:'red'}}/>
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip TransitionComponent={Zoom} title="Edit This Note">
                     <IconButton aria-label="Edit Note">
                         <Edit/>
                     </IconButton>
-                    <IconButton aria-label="Delete Note" style={{marginLeft:'auto'}}>
-                        <Delete/>
-                    </IconButton>
+                    </Tooltip>
+                    <Tooltip TransitionComponent={Zoom} title="Delete This Note">
+                        <IconButton aria-label="Delete Note" style={{marginLeft:'auto'}}>
+                            <Delete/>
+                        </IconButton>
+                    </Tooltip>
                 </CardActions>
             </Card>
             </Slide>
@@ -48,12 +54,22 @@ function CardView({note,setAlert}){
     )
 }
 
-function Home(){
+function Home(props){
     const styles=useStyles();
     const [alert,setAlert]=useState(false)
+    const isLoading=false;
 
     const doc=DOCUMENT;
-
+    if(isLoading){
+        return(
+            <div style={{paddingTop:100}}>
+            <Grid container justify="center" alignContent="center">
+                <CircularProgress style={{color:"#2962ff"}} />
+            </Grid>
+            </div>
+        );
+    }
+    else{
     return(
         <div>
         <Container maxWidth="xl"className={styles.container}>
@@ -69,26 +85,9 @@ function Home(){
                     </Button>
                 </NavLink>
             </Grid>
-            <Grid item sm={12} xs={12}>
-            <Collapse in={alert}>
-                    <Alert
-                        action={
-                            <IconButton
-                                aria-label="close"
-                                color="inherit"
-                                size="small"
-                                onClick={() => {
-                                setAlert(false);}}
-                            >
-                                <Close fontSize="inherit" />
-                            </IconButton>
-                        }
-                        severity="success"
-                     >
-                        Your Click Was Succesfull!!
-                    </Alert>
-                </Collapse>
-            </Grid>
+            <Snackbar open={alert} autoHideDuration={6000} onClose={()=>{setAlert(false)}} >
+                <Alert onClose={()=>{setAlert(false)}} severity="success" >Your Click Was Successfull</Alert>
+            </Snackbar>
             <Grid  container justify="center" alignItems="center" spacing={3} className={styles.cardContainer}>
                 {   doc.map((note)=>{
                     return(
@@ -100,6 +99,7 @@ function Home(){
         </Container>
         </div>
     );
+    }
 }
 
 const useStyles=makeStyles({

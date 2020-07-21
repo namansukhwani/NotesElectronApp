@@ -13,6 +13,9 @@ function createWindow(){
     mainWindow=new BrowserWindow({
         width:800,
         height:600,
+        webPreferences:{
+            spellcheck:false,
+        }
     });
     mainWindow.setMenuBarVisibility(false);
     mainWindow.setBackgroundColor('#f5f5f5')

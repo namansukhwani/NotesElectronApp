@@ -32,7 +32,7 @@ function Header(){
 
 const useStyles=makeStyles({
     appBar:{
-        backgroundColor:'#f5f5f5',
+        backgroundColor:'#f5f5f5c2',
         color:'#000000',
     },
     headerTitle:{

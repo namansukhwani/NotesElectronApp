@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './header';
 import Home from './home';
 import {Switch , Route , Redirect } from 'react-router-dom';
-import EditNote from './editNote';
+import NewNote from './NewNote';
 
 function Main(){
     return(
@@ -10,7 +10,7 @@ function Main(){
         <Header/>
         <Switch>
             <Route path="/home" component={()=><Home/>}/>
-            <Route path="/edit" componrnt={()=><EditNote/>}/>
+            <Route path="/edit" component={()=><NewNote/>}/>
             <Redirect to="/home" />
         </Switch>
         </div>
