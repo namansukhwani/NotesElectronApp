@@ -3,6 +3,7 @@ const path=require('path');
 const url=require('url');
 
 let mainWindow;
+let splash;
 
 function createWindow(){
     const startUrl=process.env.ELECTRON_START_URL || url.format({
@@ -11,15 +12,28 @@ function createWindow(){
         slashes:true,
     });
     mainWindow=new BrowserWindow({
-        width:800,
-        height:600,
+        width:900,
+        height:715,
         webPreferences:{
             spellcheck:false,
-        }
+        },
+        show:false,
+        backgroundColor:'#f5f5f5',
     });
+    splash=new BrowserWindow({
+        width:900,
+        height:715,
+        transparent:true,
+    })
+    splash.setMenuBarVisibility(false)
+    splash.loadURL(__dirname+'/icon.html');
     mainWindow.setMenuBarVisibility(false);
     mainWindow.setBackgroundColor('#f5f5f5')
     mainWindow.loadURL(startUrl);
+    mainWindow.once('ready-to-show',()=>{
+        splash.destroy();
+        mainWindow.show();
+    })
     mainWindow.on('closed',()=>{
         mainWindow==null;
     });
