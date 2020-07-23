@@ -12,11 +12,34 @@ function TextEditor(props){
     const [editorState, setEditorState] = useState(
         () => EditorState.createEmpty(),
     );
+
+    function onChange(editorState){
+        setEditorState(editorState);
+    }
     
+    function handelKeyCommand(command){
+        const newState=RichUtils.handleKeyCommand(editorState,command);
+        if(newState){
+            setEditorState(newState);
+            return true;
+        }
+        return false;
+    }
+
+    function onBoldClick(){
+        setEditorState(RichUtils.toggleInlineStyle(editorState,'BOLD'));
+    }
+
     return(
-        <div>
-            <Editor editorState={editorState} onChange={setEditorState} />  
-        </div>
+        <>
+            <h1>HEllo!!</h1>
+            <button style={{marginBottom:4}} onClick={onBoldClick}>BOLD</button>
+            <Editor 
+                editorState={editorState} 
+                onChange={onChange}
+                handleKeyCommand={handelKeyCommand} 
+            />  
+        </>
     );
 }
 

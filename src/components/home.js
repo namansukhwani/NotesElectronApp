@@ -1,9 +1,10 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {Container,Button,makeStyles,Grid, Card,CardContent,CardActions, Typography,IconButton,Slide,Snackbar,CircularProgress,Tooltip,Zoom} from '@material-ui/core';
-import {Add,Edit,Favorite,Delete,Close} from '@material-ui/icons';
+import {Add,Edit,Favorite,Delete} from '@material-ui/icons';
 import {Alert} from '@material-ui/lab';
 import {NavLink} from 'react-router-dom';
 import '../App.css';
+import Header from './header';
 import {DOCUMENT} from '../shared/doc';
 
 function CardView({note,setAlert}){
@@ -56,10 +57,20 @@ function CardView({note,setAlert}){
 
 function Home(props){
     const styles=useStyles();
-    const [alert,setAlert]=useState(false)
+    const [alert,setAlert]=useState(false);
+    const [search,setSearch]=useState('');
+    const [filteredDoc,setFilteredDoc]=useState([]);
     const isLoading=false;
-
     const doc=DOCUMENT;
+
+    useEffect(()=>{
+        setFilteredDoc(
+            doc.filter(note=>{
+                return note.title.toLowerCase().includes(search.toLowerCase())
+            })
+        )
+    },[search,doc])
+
     if(isLoading){
         return(
             <div style={{paddingTop:100}}>
@@ -72,6 +83,7 @@ function Home(props){
     else{
     return(
         <div>
+        <Header handleSearch={(search)=>setSearch(search)}/>
         <Container maxWidth="xl"className={styles.container}>
             <Grid container justify="center" alignItems="center">
                 <NavLink to="/edit" style={{textDecoration:'none'}}>
@@ -89,7 +101,7 @@ function Home(props){
                 <Alert onClose={()=>{setAlert(false)}} severity="success" >Your Click Was Successfull</Alert>
             </Snackbar>
             <Grid  container justify="center" alignItems="center" spacing={3} className={styles.cardContainer}>
-                {   doc.map((note)=>{
+                {   filteredDoc.map((note)=>{
                     return(
                         <CardView note={note} setAlert={setAlert}/>
                     );

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import 'font-awesome/css/font-awesome.min.css';
 import 'fontsource-roboto';
 import './index.css';
+import 'draft-js/dist/Draft.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 

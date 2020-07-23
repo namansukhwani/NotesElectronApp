@@ -3,6 +3,7 @@ import {makeStyles, Container,Grid,TextField,Button} from '@material-ui/core';
 import {Save,Delete} from '@material-ui/icons';
 import {} from '@material-ui/lab';
 import TextEditor from './textEditor';
+import BackHeader from './backHeader';
 import '../App.css';
 
 
@@ -13,6 +14,7 @@ function NewNote(props){
 
     return(
         <div>
+            <BackHeader/>
             <Container maxWidth="xl" className={styles.container}>
                 <form>
                     <Grid container justify="center" alignItems="center" spacing={3}>    
@@ -21,11 +23,11 @@ function NewNote(props){
                             label="Title"
                             placeholder="Enter Your Title Here "
                             className={styles.titleBox}
-                            value={title}
                             multiline
                         />   
                     </Grid>
-                    <Grid container justify="center" alignItems="center" spacing={3} style={{marginTop:20}}>    
+                    <TextEditor/>  
+                    <Grid container justify="center" alignItems="center" spacing={3} style={{marginTop:20}}>  
                         <TextField  
                             variant="filled"
                             label="Your Note"
@@ -33,7 +35,6 @@ function NewNote(props){
                             className={styles.titleBox}
                             multiline
                             rows={18}
-                            value={text}
                         /> 
                     </Grid>
                     <Grid container justify="space-around" alignItems="center" spacing={3} style={{marginTop:20}}>

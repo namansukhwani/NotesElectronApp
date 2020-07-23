@@ -3,8 +3,9 @@ import {AppBar, Typography,makeStyles,Toolbar,InputBase,IconButton} from '@mater
 import {Search,Settings} from '@material-ui/icons';
 import '../App.css';
 
-function Header(){
+function Header(props){
     const styles=useStyles();
+    
     return(
            <AppBar elevation={1} position="fixed" className={styles.appBar}>
                 <Toolbar className={styles.toolbar}>
@@ -18,6 +19,7 @@ function Header(){
                             <InputBase placeholder="Search..." 
                             style={{width:'100%',padding:1,marginLeft:2}}
                             autoFocus={true}
+                            onChange={(e)=>{props.handleSearch(e.target.value);}}
                         />
                         </div>
                     </div>

@@ -7,7 +7,6 @@ import NewNote from './NewNote';
 function Main(){
     return(
         <div>
-        <Header/>
         <Switch>
             <Route path="/home" component={()=><Home/>}/>
             <Route path="/edit" component={()=><NewNote/>}/>
