@@ -28,7 +28,7 @@
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "start": "set BROWSER=none && react-scripts start",
+    "start": "react-scripts start",
     "electron-start": "set ELECTRON_START_URL=http://localhost:3000 && electron .",
     "build": "react-scripts build",
     "test": "react-scripts test",

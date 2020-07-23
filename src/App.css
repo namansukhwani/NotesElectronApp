@@ -1,3 +1,23 @@
-.c{
-    background-color: #f5f5f5c2;
+.RichEditor-editor{
+    background-color: #c2c2c2;
+    border: 1px solid;
+    min-height:345px;
+    max-height: auto;
+    padding:2;
+    border-radius: 4px;
+    max-width: 700px;
+    min-width: auto;
+}
+.editorDiv{
+    width: 700px;
+    max-width:700px;
+    min-width: auto;
+}
+.loadingDiv{
+    flex: 1;
+    display: flex;
+    top: 50%;
+    height: 500px;
+    justify-content: center;
+    align-items: center;
 }

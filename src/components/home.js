@@ -73,10 +73,8 @@ function Home(props){
 
     if(isLoading){
         return(
-            <div style={{paddingTop:100}}>
-            <Grid container justify="center" alignContent="center">
+            <div className="loadingDiv">
                 <CircularProgress style={{color:"#2962ff"}} />
-            </Grid>
             </div>
         );
     }
@@ -90,7 +88,7 @@ function Home(props){
                     <Button 
                         variant="contained" 
                         size="large"
-                        style={{backgroundColor:'#2962ff',marginTop:8}}
+                        style={{background:'linear-gradient(to right, #0039cb, #768fff)',marginTop:8}}
                         startIcon={<Add/>}
                     >
                         Add a New Note
@@ -129,7 +127,7 @@ const useStyles=makeStyles({
         padding:20
     },
     card:{
-        backgroundColor:"#ffffff",
+        background:"linear-gradient(to right, #c2c2c2, #768fff)",
         borderRadius:8,
         height:110,
         width:600
