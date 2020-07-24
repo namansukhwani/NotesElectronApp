@@ -12,17 +12,23 @@ import {
   } from 'draft-js';
 import '../App.css';
 
-const MAX_LENGTH = 10;
+//const MAX_LENGTH = 10;
 
-function TextEditor(props){
+function TextEditor({handleNotesData,data}){
+    data=null;
+    var initialState=EditorState.createEmpty();
+    if(data!=null){
+        const parsedData=convertFromRaw(JSON.parse(data));
+        initialState=EditorState.createWithContent(parsedData);
+    }
 
     const [borderColor,setBorderColor]=useState('#8d8d8d');
-    const [editorState, setEditorState] = useState(
-        () => EditorState.createEmpty(),
-    );
+    const [editorState, setEditorState] = useState(initialState);
     
 
     const onChange=(editorState)=>{
+        const currentState=editorState.getCurrentContent();
+        handleNotesData(convertToRaw(currentState));
         setEditorState(editorState);
     }
     
@@ -48,7 +54,7 @@ function TextEditor(props){
         onChange(RichUtils.toggleInlineStyle(editorState,inlineStyle));
     }
 
-    const _getLengthOfSelectedText=()=>{
+    /*const _getLengthOfSelectedText=()=>{
         console.log('say');
 
         const currentSelection=editorState.getSelection();
@@ -115,6 +121,7 @@ function TextEditor(props){
     	return 'handled';
     }
     }
+*/
 
 
     const focus=()=>{
@@ -128,7 +135,7 @@ function TextEditor(props){
     return(
         <>
         <Grid container justify="center" spacing={3} style={{marginTop:20}}>
-            <Grid container xs={12} sm={12} justify="center" alignItems="center">
+            <Grid container justify="center" alignItems="center">
             <InlineStyleControls toggleInlineStyle={toggleInlineStyle}/>
             <BlockStyleControls toggleBlockType={toggleBlockType}/>
             </Grid>
@@ -160,10 +167,10 @@ function TextEditor(props){
 // Custom overrides for "code" style.
 const styleMap = {
     CODE: {
-      backgroundColor: 'rgba(0, 0, 0, 0.05)',
+      backgroundColor: '#ffffffc2',
       fontFamily: '"Roboto","Inconsolata", "Menlo", "Consolas", monospace',
-      fontSize: 16,
-      padding: 2,
+      fontSize: 18,
+      padding: 4,
     },
 };
 
@@ -185,34 +192,34 @@ function BlockStyleControls({toggleBlockType}){
 
     return(
         <ToggleButtonGroup size="medium" value={formats} exclusive onChange={handelFormat} >
-            <ToggleButton value="H1">
+            <ToggleButton value="H1" onClick={()=>toggle('header-one')}>
                 <strong>H1</strong>
             </ToggleButton>
-            <ToggleButton value="H2">
+            <ToggleButton value="H2" onClick={()=>toggle('header-two')}>
                 <strong>H2</strong>
             </ToggleButton>
-            <ToggleButton value="H3">
+            <ToggleButton value="H3" onClick={()=>toggle('header-three')}>
                 <strong>H3</strong>
             </ToggleButton>
-            <ToggleButton value="H4">
+            <ToggleButton value="H4" onClick={()=>toggle('header-four')}>
                 <strong>H4</strong>
             </ToggleButton>
-            <ToggleButton value="H5">
+            <ToggleButton value="H5" onClick={()=>toggle('header-five')}>
                 <strong>H5</strong>
             </ToggleButton>
-            <ToggleButton value="H6">
+            <ToggleButton value="H6" onClick={()=>toggle('header-six')}>
                 <strong>H6</strong>
             </ToggleButton>
-            <ToggleButton value="Blockquote">
+            <ToggleButton value="Blockquote" onClick={()=>toggle('blockquote')}>
                 <FormatIndentIncrease/>
             </ToggleButton>
-            <ToggleButton value="UL">
+            <ToggleButton value="UL" onClick={()=>toggle('unordered-list-item')}>
                 <FormatListBulleted/>
             </ToggleButton>
-            <ToggleButton value="OL">
+            <ToggleButton value="OL" onClick={()=>toggle('ordered-list-item')}>
                 <FormatListNumbered/>
             </ToggleButton>
-            <ToggleButton value="CodeBlock">
+            <ToggleButton value="CodeBlock" onClick={()=>toggle('code-block')}>
                 <Code/>
             </ToggleButton>
         </ToggleButtonGroup>
@@ -220,26 +227,21 @@ function BlockStyleControls({toggleBlockType}){
 }
 
 function InlineStyleControls({toggleInlineStyle}){
-    const [formats,setFormats]=useState(()=>[]);
-
-    const handelFormat=(event,newFormat)=>{
-        setFormats(newFormat);
-    }
 
     const toggle=(type)=>toggleInlineStyle(type);
 
     return(
-        <ToggleButtonGroup size="medium" value={formats} onChange={handelFormat}>
-            <ToggleButton value="Bold">
+        <ToggleButtonGroup size="medium" >
+            <ToggleButton value="Bold" onClick={()=>toggle('BOLD')}>
                 <FormatBold/>
             </ToggleButton>
-            <ToggleButton value="Italic">
+            <ToggleButton value="Italic" onClick={()=>toggle('ITALIC')}>
                 <FormatItalic/>
             </ToggleButton>
-            <ToggleButton value="Underline">
+            <ToggleButton value="Underline" onClick={()=>toggle('UNDERLINE')}>
                 <FormatUnderlined/>
             </ToggleButton>
-            <ToggleButton value="Monospace">
+            <ToggleButton value="Monospace" onClick={()=>toggle('CODE')}>
                 <strong>Monospace</strong>
             </ToggleButton>
         </ToggleButtonGroup>
