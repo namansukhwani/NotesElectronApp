@@ -5,7 +5,6 @@ import {Alert} from '@material-ui/lab';
 import {NavLink} from 'react-router-dom';
 import '../App.css';
 import Header from './header';
-import {DOCUMENT} from '../shared/doc';
 
 function CardView({note,setAlert}){
     const styles=useStyles();
@@ -30,7 +29,7 @@ function CardView({note,setAlert}){
                 onClick={()=>setAlert(true)}
             >
                 <CardContent>
-                    <Typography className={styles.cardText}>{note.title}</Typography>
+                    <Typography className={styles.cardText}>{note.doc.title}</Typography>
                 </CardContent>
                 <CardActions >
                     <Tooltip TransitionComponent={Zoom} title="Add To Favorites">
@@ -60,23 +59,29 @@ function Home(props){
     const [alert,setAlert]=useState(false);
     const [search,setSearch]=useState('');
     const [filteredDoc,setFilteredDoc]=useState([]);
-    const isLoading=false;
-    const doc=DOCUMENT;
-
+    var doc=props.notes.notes;
+    
     useEffect(()=>{
         setFilteredDoc(
             doc.filter(note=>{
-                return note.title.toLowerCase().includes(search.toLowerCase())
+                return note.doc.title.toLowerCase().includes(search.toLowerCase())
             })
         )
     },[search,doc])
 
-    if(isLoading){
+    if(props.notes.isLoading){
         return(
             <div className="loadingDiv">
                 <CircularProgress style={{color:"#2962ff"}} />
             </div>
         );
+    }
+    if(props.notes.err){
+        return(
+            <div className="loadingDiv">
+                <h3>{props.notes.err}</h3>
+            </div>
+        )
     }
     else{
     return(
@@ -99,11 +104,16 @@ function Home(props){
                 <Alert onClose={()=>{setAlert(false)}} severity="success" >Your Click Was Successfull</Alert>
             </Snackbar>
             <Grid  container justify="center" alignItems="center" spacing={3} className={styles.cardContainer}>
-                {   filteredDoc.map((note)=>{
+                { doc ? 
+                   filteredDoc.map((note)=>{
                     return(
                         <CardView note={note} setAlert={setAlert}/>
                     );
-                })}                
+                }):
+                    <Grid container item xs={12} sm={12} md={12} justify="space-evenly" alignItems="center">
+                        <h3>Please Add a New Note</h3>
+                    </Grid>
+                }                
             </Grid>
 
         </Container>

@@ -14,7 +14,7 @@ function BackHeader(props){
                     <IconButton 
                         className={styles.backButton}
                         size="medium" 
-                        onClick={()=>history.push('/home')}
+                        onClick={()=>history.goBack()}
                     >
                             <ArrowBack style={{fontSize:30}}/>
                     </IconButton>

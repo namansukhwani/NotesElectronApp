@@ -4,6 +4,7 @@ import {Save,Delete} from '@material-ui/icons';
 import {} from '@material-ui/lab';
 import TextEditor from './textEditor';
 import BackHeader from './backHeader';
+import {useHistory} from 'react-router-dom';
 import '../App.css';
 
 
@@ -13,6 +14,7 @@ function NewNote(props){
     //const text="The Union Ministry of Human Resources and Development (HRD) has released a circular asking states and union territories to seek feedback from parents when they will be comfortable with reopening of schools.";
     const [noteData,setNoteData]=useState({});
     const [titleData,setTitleData]=useState('');
+    const history=useHistory();
 
     const handleNotesData=(data)=>{
         setNoteData(data)
@@ -23,7 +25,9 @@ function NewNote(props){
             title:titleData,
             note:noteData
         };
+        props.postNote(payload);
         console.log(payload);
+        history.push('/home');
         event.preventDefault();
     };
 

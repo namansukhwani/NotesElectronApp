@@ -1,11 +1,14 @@
-import React from 'react';
-import {AppBar, Typography,makeStyles,Toolbar,InputBase,IconButton} from '@material-ui/core';
-import {Search,Settings} from '@material-ui/icons';
+import React,{useState} from 'react';
+import {AppBar, Typography,makeStyles,Toolbar,InputBase,IconButton,Menu,MenuItem, Tooltip,Zoom} from '@material-ui/core';
+import {Search,Settings,Favorite} from '@material-ui/icons';
 import '../App.css';
 
 function Header(props){
     const styles=useStyles();
-    
+    const [openSetting,setOpenSetting]=useState()
+    const closeSetting=()=>{
+        setOpenSetting(null);
+    }
     return(
            <AppBar elevation={1} position="fixed" className={styles.appBar}>
                 <Toolbar className={styles.toolbar}>
@@ -23,10 +26,27 @@ function Header(props){
                         />
                         </div>
                     </div>
-                    <IconButton className={styles.settingButton}>
+                    <Tooltip TransitionComponent={Zoom} title="Your Favorites">
+                    <IconButton className={styles.favoriteButton} > 
+                        <Favorite/>
+                        <Typography>Favorites</Typography>
+                    </IconButton>
+                    </Tooltip>
+                    <Tooltip TransitionComponent={Zoom} title="Settings">
+                    <IconButton className={styles.settingButton} onClick={(e)=>{setOpenSetting(e.currentTarget)}}> 
                         <Settings/>
                     </IconButton>
-                    
+                    </Tooltip>
+                    <Menu
+                        id="settingMenu"
+                        anchorEl={openSetting}
+                        open={Boolean(openSetting)}
+                        onClose={closeSetting}
+                    >
+                        <MenuItem onClick={closeSetting} >View Favorites</MenuItem>
+                        <MenuItem onClick={closeSetting} >Create Backup</MenuItem>
+                        <MenuItem onClick={closeSetting} >Delete All Notes</MenuItem>
+                    </Menu>
                 </Toolbar>
            </AppBar>
     );
@@ -63,9 +83,13 @@ const useStyles=makeStyles({
         justifyContent:'center'
     },
     settingButton:{
+        marginLeft:1,
+        color:'#000000'
+    },
+    favoriteButton:{
         marginLeft:'auto',
         color:'#000000'
-    }
+    },
 })
 
 export default Header
