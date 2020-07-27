@@ -15,10 +15,10 @@ import '../App.css';
 //const MAX_LENGTH = 10;
 
 function TextEditor({handleNotesData,data}){
-    data=null;
+    
     var initialState=EditorState.createEmpty();
     if(data!=null){
-        const parsedData=convertFromRaw(JSON.parse(data));
+        const parsedData=convertFromRaw(data);
         initialState=EditorState.createWithContent(parsedData);
     }
 

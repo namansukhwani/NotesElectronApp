@@ -1,14 +1,15 @@
 import React,{useState,useEffect} from 'react';
-import {Container,Button,makeStyles,Grid, Card,CardContent,CardActions, Typography,IconButton,Slide,Snackbar,CircularProgress,Tooltip,Zoom} from '@material-ui/core';
+import {Container,Button,makeStyles,Grid, Card,CardContent,CardActions,CardActionArea, Typography,IconButton,Slide,Snackbar,CircularProgress,Tooltip,Zoom} from '@material-ui/core';
 import {Add,Edit,Favorite,Delete} from '@material-ui/icons';
 import {Alert} from '@material-ui/lab';
-import {NavLink} from 'react-router-dom';
+import {NavLink,useHistory} from 'react-router-dom';
 import '../App.css';
 import Header from './header';
 
-function CardView({note,setAlert}){
+function CardView({note,setAlert,deleteNote}){
     const styles=useStyles();
     const [shadow,setShadow]=useState(false);
+    const history=useHistory();
 
     const onMouseOver=()=>{
         setShadow(true)
@@ -26,24 +27,26 @@ function CardView({note,setAlert}){
                 onMouseOver={onMouseOver}
                 onMouseOut={onMouseOut}
                 raised={shadow}
-                onClick={()=>setAlert(true)}
+                
             >
+                <CardActionArea onClick={()=>history.push(`/editNote/${note.id}`)}>
                 <CardContent>
                     <Typography className={styles.cardText}>{note.doc.title}</Typography>
                 </CardContent>
+                </CardActionArea>
                 <CardActions >
                     <Tooltip TransitionComponent={Zoom} title="Add To Favorites">
-                        <IconButton aria-label="Add Favorite">
+                        <IconButton aria-label="Add Favorite" onClick={(e)=>e.preventDefault()}>
                             <Favorite style={{color:'red'}}/>
                         </IconButton>
                     </Tooltip>
                     <Tooltip TransitionComponent={Zoom} title="Edit This Note">
-                    <IconButton aria-label="Edit Note">
+                    <IconButton aria-label="Edit Note" onClick={()=>history.push(`/editNote/${note.id}`)}>
                         <Edit/>
                     </IconButton>
                     </Tooltip>
                     <Tooltip TransitionComponent={Zoom} title="Delete This Note">
-                        <IconButton aria-label="Delete Note" style={{marginLeft:'auto'}}>
+                        <IconButton aria-label="Delete Note" style={{marginLeft:'auto'}} onClick={(e)=>{deleteNote(note.id,note.doc._rev);e.preventDefault();}}>
                             <Delete/>
                         </IconButton>
                     </Tooltip>
@@ -89,7 +92,7 @@ function Home(props){
         <Header handleSearch={(search)=>setSearch(search)}/>
         <Container maxWidth="xl"className={styles.container}>
             <Grid container justify="center" alignItems="center">
-                <NavLink to="/edit" style={{textDecoration:'none'}}>
+                <NavLink to="/newNote" style={{textDecoration:'none'}}>
                     <Button 
                         variant="contained" 
                         size="large"
@@ -104,12 +107,17 @@ function Home(props){
                 <Alert onClose={()=>{setAlert(false)}} severity="success" >Your Click Was Successfull</Alert>
             </Snackbar>
             <Grid  container justify="center" alignItems="center" spacing={3} className={styles.cardContainer}>
-                { doc ? 
+                { doc.length ? (
+                    filteredDoc.length ?
                    filteredDoc.map((note)=>{
                     return(
-                        <CardView note={note} setAlert={setAlert}/>
+                        <CardView note={note} setAlert={setAlert} deleteNote={props.deleteNote}/>
                     );
                 }):
+                <Grid container item xs={12} sm={12} md={12} justify="space-evenly" alignItems="center">
+                        <h3>No Search results...</h3>
+                    </Grid>
+                    ):
                     <Grid container item xs={12} sm={12} md={12} justify="space-evenly" alignItems="center">
                         <h3>Please Add a New Note</h3>
                     </Grid>

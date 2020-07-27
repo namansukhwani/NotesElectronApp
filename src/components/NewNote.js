@@ -57,16 +57,8 @@ function NewNote(props){
                             startIcon={<Save/>}
                             type="submit"
                         >
-                            SAVE
+                            SAVE AND CREATE NEW NOTE
                         </Button>
-                        <Button
-                            variant="contained" 
-                            size="large"
-                            style={{backgroundColor:'#ba000d',color:'#fff',marginTop:8}}
-                            startIcon={<Delete style={{color:'#fff'}}/>}
-                        >
-                            DELETE
-                        </Button>    
                     </Grid>
                 </form>
             </Container>
