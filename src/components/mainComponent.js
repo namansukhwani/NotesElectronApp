@@ -1,10 +1,11 @@
 import React,{useEffect,useCallback} from 'react';
 import {Switch , Route , Redirect,withRouter } from 'react-router-dom';
 import {connect} from 'react-redux'
-import {fetchNotes,postNote,deleteNote,editNote} from '../redux/actions';
+import {fetchNotes,postNote,deleteNote,editNote,setFavorite} from '../redux/actions';
 import Home from './home';
 import NewNote from './NewNote';
 import EditNote from './editNote';
+import Favorites from './favorites';
 
 const mapStateToProps=state=>{
     return{
@@ -16,10 +17,11 @@ const mapDispatchToProps=dispatch=>({
     fetchNotes:()=>dispatch(fetchNotes()),
     postNote:(newNote)=>dispatch(postNote(newNote)),
     deleteNote:(noteId,noteRev)=>dispatch(deleteNote(noteId,noteRev)),
-    editNote:(noteId,updatedData)=>dispatch(editNote(noteId,updatedData))
+    editNote:(noteId,updatedData)=>dispatch(editNote(noteId,updatedData)),
+    setFavorite:(noteId,value)=>dispatch(setFavorite(noteId,value))
 })
 
-function Main({fetchNotes,notes,postNote,deleteNote,editNote}){
+function Main({fetchNotes,notes,postNote,deleteNote,editNote,setFavorite}){
 
     const fetchAllNotes=useCallback(()=>{
         fetchNotes();
@@ -39,9 +41,10 @@ function Main({fetchNotes,notes,postNote,deleteNote,editNote}){
     return(
         <div>
         <Switch>
-            <Route path="/home" component={()=><Home notes={notes} deleteNote={deleteNote}/>}/>
+            <Route path="/home" component={()=><Home notes={notes} deleteNote={deleteNote} setFavorite={setFavorite}/>}/>
             <Route path="/newNote" component={()=><NewNote postNote={postNote}/>}/>
             <Route path="/editNote/:noteId" component={EditNotes}/>
+            <Route path="/favorites" component={()=><Favorites notes={notes} deleteNote={deleteNote} setFavorite={setFavorite} />}/>
             <Redirect to="/home" />
         </Switch>
         </div>

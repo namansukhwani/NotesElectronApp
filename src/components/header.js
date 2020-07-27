@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
-import {AppBar, Typography,makeStyles,Toolbar,InputBase,IconButton,Menu,MenuItem, Tooltip,Zoom} from '@material-ui/core';
+import {AppBar, Typography,makeStyles,Toolbar,InputBase,Button,IconButton,Menu,MenuItem, Tooltip,Zoom} from '@material-ui/core';
 import {Search,Settings,Favorite} from '@material-ui/icons';
+import {useHistory} from 'react-router-dom';
 import '../App.css';
 
 function Header(props){
@@ -9,6 +10,8 @@ function Header(props){
     const closeSetting=()=>{
         setOpenSetting(null);
     }
+    const history=useHistory();
+    
     return(
            <AppBar elevation={1} position="fixed" className={styles.appBar}>
                 <Toolbar className={styles.toolbar}>
@@ -27,10 +30,9 @@ function Header(props){
                         </div>
                     </div>
                     <Tooltip TransitionComponent={Zoom} title="Your Favorites">
-                    <IconButton className={styles.favoriteButton} > 
-                        <Favorite/>
-                        <Typography>Favorites</Typography>
-                    </IconButton>
+                    <Button className={styles.favoriteButton} startIcon={<Favorite/>} onClick={()=>{history.push('/favorites')}}> 
+                        Favorites
+                    </Button>
                     </Tooltip>
                     <Tooltip TransitionComponent={Zoom} title="Settings">
                     <IconButton className={styles.settingButton} onClick={(e)=>{setOpenSetting(e.currentTarget)}}> 

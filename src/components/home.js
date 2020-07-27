@@ -1,12 +1,12 @@
 import React,{useState,useEffect} from 'react';
 import {Container,Button,makeStyles,Grid, Card,CardContent,CardActions,CardActionArea, Typography,IconButton,Slide,Snackbar,CircularProgress,Tooltip,Zoom} from '@material-ui/core';
-import {Add,Edit,Favorite,Delete} from '@material-ui/icons';
+import {Add,Edit,Favorite,Delete,FavoriteBorder} from '@material-ui/icons';
 import {Alert} from '@material-ui/lab';
 import {NavLink,useHistory} from 'react-router-dom';
 import '../App.css';
 import Header from './header';
 
-function CardView({note,setAlert,deleteNote}){
+function CardView({note,setAlert,deleteNote,setFavorite}){
     const styles=useStyles();
     const [shadow,setShadow]=useState(false);
     const history=useHistory();
@@ -27,7 +27,6 @@ function CardView({note,setAlert,deleteNote}){
                 onMouseOver={onMouseOver}
                 onMouseOut={onMouseOut}
                 raised={shadow}
-                
             >
                 <CardActionArea onClick={()=>history.push(`/editNote/${note.id}`)}>
                 <CardContent>
@@ -36,8 +35,12 @@ function CardView({note,setAlert,deleteNote}){
                 </CardActionArea>
                 <CardActions >
                     <Tooltip TransitionComponent={Zoom} title="Add To Favorites">
-                        <IconButton aria-label="Add Favorite" onClick={(e)=>e.preventDefault()}>
-                            <Favorite style={{color:'red'}}/>
+                        <IconButton aria-label="Add Favorite" onClick={()=>setFavorite(note.id,!note.doc.favorite)}>
+                            {note.doc.favorite ? 
+                                <Favorite style={{color:'red'}}/> 
+                                :
+                                <FavoriteBorder/>    
+                            }
                         </IconButton>
                     </Tooltip>
                     <Tooltip TransitionComponent={Zoom} title="Edit This Note">
@@ -104,22 +107,23 @@ function Home(props){
                 </NavLink>
             </Grid>
             <Snackbar open={alert} autoHideDuration={6000} onClose={()=>{setAlert(false)}} >
-                <Alert onClose={()=>{setAlert(false)}} severity="success" >Your Click Was Successfull</Alert>
+                    <Alert onClose={()=>{setAlert(false)}} severity="success" >New Note was Successfully created.</Alert>
             </Snackbar>
             <Grid  container justify="center" alignItems="center" spacing={3} className={styles.cardContainer}>
                 { doc.length ? (
                     filteredDoc.length ?
                    filteredDoc.map((note)=>{
                     return(
-                        <CardView note={note} setAlert={setAlert} deleteNote={props.deleteNote}/>
+                        <CardView note={note} setAlert={setAlert} deleteNote={props.deleteNote} setFavorite={props.setFavorite}/>
                     );
                 }):
                 <Grid container item xs={12} sm={12} md={12} justify="space-evenly" alignItems="center">
-                        <h3>No Search results...</h3>
+                        <p style={{fontSize:22}}>No Search results...</p>
                     </Grid>
                     ):
-                    <Grid container item xs={12} sm={12} md={12} justify="space-evenly" alignItems="center">
-                        <h3>Please Add a New Note</h3>
+                    <Grid container direction="column" xs={12} sm={12} md={12} justify="space-evenly" alignItems="center">
+                        <p style={{fontSize:22}}>You Don't Have Any Notes</p>
+                        <p style={{fontSize:14}}>Click Add Button Above to Add One</p>
                     </Grid>
                 }                
             </Grid>
@@ -151,6 +155,7 @@ const useStyles=makeStyles({
         width:600
     },
     cardText:{
+        fontWeight:'bold',
         textOverflow:'ellipsis',
         overflow:'hidden',
         whiteSpace:'nowrap'

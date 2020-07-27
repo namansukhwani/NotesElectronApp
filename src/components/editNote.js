@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import {makeStyles, Container,Grid,TextField,Button} from '@material-ui/core';
-import {Save,Delete} from '@material-ui/icons';
+import {Save} from '@material-ui/icons';
 import {} from '@material-ui/lab';
 import TextEditor from './textEditor';
 import BackHeader from './backHeader';
@@ -31,7 +31,7 @@ function EditNote({note,editNote}){
 
     return(
         <div>
-            <BackHeader/>
+            <BackHeader customTitle={true} headerTitle="Edit Note" />
             <Container maxWidth="xl" className={styles.container}>
                 <form onSubmit={handleSubmit}>
                     <Grid container justify="center" alignItems="center" spacing={3}>    

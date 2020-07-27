@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
-import {makeStyles, Container,Grid,TextField,Button} from '@material-ui/core';
-import {Save,Delete} from '@material-ui/icons';
-import {} from '@material-ui/lab';
+import {makeStyles, Container,Grid,TextField,Button,Snackbar} from '@material-ui/core';
+import {Save} from '@material-ui/icons';
+import {Alert} from '@material-ui/lab';
 import TextEditor from './textEditor';
 import BackHeader from './backHeader';
 import {useHistory} from 'react-router-dom';
@@ -10,8 +10,6 @@ import '../App.css';
 
 function NewNote(props){
     const styles=useStyles();
-    //const title="Coronavirus COVID-19: Centre seeks feedback from states and union territories on reopening of schools";
-    //const text="The Union Ministry of Human Resources and Development (HRD) has released a circular asking states and union territories to seek feedback from parents when they will be comfortable with reopening of schools.";
     const [noteData,setNoteData]=useState({});
     const [titleData,setTitleData]=useState('');
     const history=useHistory();
@@ -21,21 +19,22 @@ function NewNote(props){
     };
 
     const handleSubmit=(event)=>{
+        event.preventDefault();
         const payload={
             title:titleData,
-            note:noteData
+            note:noteData,
+            favorite:false
         };
         props.postNote(payload);
         console.log(payload);
-        history.push('/home');
-        event.preventDefault();
+        //history.push('/home');
     };
 
     return(
         <div>
-            <BackHeader/>
+            <BackHeader customTitle={true} headerTitle="New Note" />
             <Container maxWidth="xl" className={styles.container}>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={(event)=>{handleSubmit(event)}}>
                     <Grid container justify="center" alignItems="center" spacing={3}>    
                         <TextField required 
                             variant="outlined"
