@@ -21,3 +21,23 @@
     justify-content: center;
     align-items: center;
 }
+.draftView{
+    border:0px;
+    max-height: auto;
+    max-width: 700px;
+    min-width: auto;
+    padding:2;
+}
+.line{
+    border-bottom:1px ridge #c2c2c2;
+    border-top: 1px ridge #c2c2c2;
+    max-width: 700px;
+    min-width: auto;
+    width: 700px;
+    padding: 1px;
+}
+.date{
+    margin-right: auto;
+    font-size: 13px;
+    font-family: "Roboto",sans-serif;
+}

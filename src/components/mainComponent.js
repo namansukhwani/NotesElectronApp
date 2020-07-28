@@ -6,6 +6,7 @@ import Home from './home';
 import NewNote from './NewNote';
 import EditNote from './editNote';
 import Favorites from './favorites';
+import ViewNote from './viewNote';
 
 const mapStateToProps=state=>{
     return{
@@ -38,11 +39,18 @@ function Main({fetchNotes,notes,postNote,deleteNote,editNote,setFavorite}){
         )
     }
 
+    const ViewNotes=({match})=>{
+        return(
+            <ViewNote note={notes.notes.filter((note)=>note.id ===match.params.Id)[0]} deleteNote={deleteNote} setFavorite={setFavorite}/>
+        );
+    }
+
     return(
         <div>
         <Switch>
             <Route path="/home" component={()=><Home notes={notes} deleteNote={deleteNote} setFavorite={setFavorite}/>}/>
             <Route path="/newNote" component={()=><NewNote postNote={postNote}/>}/>
+            <Route path="/viewNote/:Id" component={ViewNotes}/>
             <Route path="/editNote/:noteId" component={EditNotes}/>
             <Route path="/favorites" component={()=><Favorites notes={notes} deleteNote={deleteNote} setFavorite={setFavorite} />}/>
             <Redirect to="/home" />

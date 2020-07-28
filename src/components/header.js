@@ -45,7 +45,7 @@ function Header(props){
                         open={Boolean(openSetting)}
                         onClose={closeSetting}
                     >
-                        <MenuItem onClick={closeSetting} >View Favorites</MenuItem>
+                        <MenuItem onClick={()=>{closeSetting();history.push('/favorites')}} >View Favorites</MenuItem>
                         <MenuItem onClick={closeSetting} >Create Backup</MenuItem>
                         <MenuItem onClick={closeSetting} >Delete All Notes</MenuItem>
                     </Menu>

@@ -28,7 +28,7 @@ function CardView({note,setAlert,deleteNote,setFavorite}){
                 onMouseOut={onMouseOut}
                 raised={shadow}
             >
-                <CardActionArea onClick={()=>history.push(`/editNote/${note.id}`)}>
+                <CardActionArea onClick={()=>history.push(`/viewNote/${note.id}`)}>
                 <CardContent>
                     <Typography className={styles.cardText}>{note.doc.title}</Typography>
                 </CardContent>
