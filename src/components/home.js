@@ -1,5 +1,26 @@
 import React,{useState,useEffect} from 'react';
-import {Container,Button,makeStyles,Grid, Card,CardContent,CardActions,CardActionArea, Typography,IconButton,Slide,Snackbar,CircularProgress,Tooltip,Zoom} from '@material-ui/core';
+import {
+    Container,
+    Button,
+    makeStyles,
+    Grid,
+    Card,
+    CardContent,
+    CardActions,
+    CardActionArea, 
+    Typography,
+    IconButton,
+    Slide,
+    Snackbar,
+    CircularProgress,
+    Tooltip,
+    Zoom,
+    Dialog, 
+    DialogTitle, 
+    DialogContent, 
+    DialogContentText, 
+    DialogActions,
+} from '@material-ui/core';
 import {Add,Edit,Favorite,Delete,FavoriteBorder} from '@material-ui/icons';
 import {Alert} from '@material-ui/lab';
 import {NavLink,useHistory} from 'react-router-dom';
@@ -8,6 +29,7 @@ import Header from './header';
 
 function CardView({note,setAlert,deleteNote,setFavorite}){
     const styles=useStyles();
+    const [deleteDialoge,setDeleteDialoge]=useState(false);
     const [shadow,setShadow]=useState(false);
     const history=useHistory();
 
@@ -20,6 +42,7 @@ function CardView({note,setAlert,deleteNote,setFavorite}){
     };
 
     return(
+        <>
         <Grid container item xs={12} sm={6} md={6} justify="space-evenly" alignItems="center">
             <Slide direction="up" in={true} mountOnEnter unmountOnExit>
             <Card 
@@ -49,7 +72,7 @@ function CardView({note,setAlert,deleteNote,setFavorite}){
                     </IconButton>
                     </Tooltip>
                     <Tooltip TransitionComponent={Zoom} title="Delete This Note">
-                        <IconButton aria-label="Delete Note" style={{marginLeft:'auto'}} onClick={(e)=>{deleteNote(note.id,note.doc._rev);e.preventDefault();}}>
+                        <IconButton aria-label="Delete Note" style={{marginLeft:'auto'}} onClick={(e)=>{setDeleteDialoge(true);e.preventDefault();}}>
                             <Delete/>
                         </IconButton>
                     </Tooltip>
@@ -57,6 +80,27 @@ function CardView({note,setAlert,deleteNote,setFavorite}){
             </Card>
             </Slide>
         </Grid>
+        <Dialog
+        open={deleteDialoge}
+        keepMounted
+        onClose={()=>setDeleteDialoge(false)}
+    >
+        <DialogTitle>Delete This Note?</DialogTitle>
+        <DialogContent>
+            <DialogContentText>
+                Are you sure you want to Delete this Note it will be permanently Deleted?
+            </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={()=>setDeleteDialoge(false)} color="primary">
+                Cancle
+            </Button>
+            <Button onClick={(e)=>{deleteNote(note.id,note.doc._rev);;e.preventDefault();setDeleteDialoge(false);}} color="primary">
+                OK
+            </Button>
+        </DialogActions>
+        </Dialog>
+        </>
     )
 }
 
