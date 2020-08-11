@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {makeStyles, Container,Grid,TextField,Button,Snackbar} from '@material-ui/core';
+import {makeStyles, Container,Grid,TextField,Button,Snackbar,Slide} from '@material-ui/core';
 import {Save} from '@material-ui/icons';
 import {Alert} from '@material-ui/lab';
 import TextEditor from './textEditor';
@@ -26,13 +26,13 @@ function NewNote(props){
             favorite:false
         };
         props.postNote(payload);
-        console.log(payload);
-        //history.push('/home');
+        history.push('/home');
     };
 
     return(
         <div>
             <BackHeader customTitle={true} headerTitle="New Note" />
+            <Slide direction="up" in={true} mountOnEnter unmountOnExit>
             <Container maxWidth="xl" className={styles.container}>
                 <form onSubmit={(event)=>{handleSubmit(event)}}>
                     <Grid container justify="center" alignItems="center" spacing={3}>    
@@ -61,6 +61,7 @@ function NewNote(props){
                     </Grid>
                 </form>
             </Container>
+            </Slide>
         </div>
     );
 }

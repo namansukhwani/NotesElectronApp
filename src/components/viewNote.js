@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {makeStyles,Container,Grid,Typography,Tooltip,IconButton,Zoom,Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button,} from '@material-ui/core';
+import {makeStyles,Container,Grid,Typography,Tooltip,IconButton,Zoom,Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button,Slide} from '@material-ui/core';
 import {Favorite,FavoriteBorder,Edit,Delete} from '@material-ui/icons';
 import {} from '@material-ui/lab';
 import {useHistory} from 'react-router-dom';
@@ -15,6 +15,7 @@ function ViewNote(props){
     return(
         <div>
             <BackHeader/>
+            <Slide direction="up" in={true} mountOnEnter unmountOnExit>
             <Container maxWidth="xl" className={styles.container}>
                 <Grid container justify="center" alignContent="center" spacing={3} style={{marginTop:20}}>
                     <Typography className={styles.title}>{props.note.doc.title}</Typography>
@@ -67,6 +68,7 @@ function ViewNote(props){
                 </DialogActions>
             </Dialog>
             </Container>
+            </Slide>
         </div>
     );
 }
