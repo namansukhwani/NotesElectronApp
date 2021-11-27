@@ -7,7 +7,6 @@ import BackHeader from './backHeader';
 import {useHistory} from 'react-router-dom';
 import '../App.css';
 
-
 function EditNote({note,editNote}){
     const styles=useStyles();
     const [noteData,setNoteData]=useState(note.doc.note);

@@ -3,6 +3,7 @@ import {AppBar, Typography,makeStyles,Toolbar,InputBase,Button,IconButton,Menu,M
 import {Search,Settings,Favorite} from '@material-ui/icons';
 import {useHistory} from 'react-router-dom';
 import '../App.css';
+import logo from '../assets/notesLogo.png'
 
 function Header(props){
     const styles=useStyles();
@@ -15,7 +16,7 @@ function Header(props){
     return(
            <AppBar elevation={1} position="fixed" className={styles.appBar}>
                 <Toolbar className={styles.toolbar}>
-                    <img src={require('../shared/images/notesLogo.png')} alt=" " width="45" height="45" />
+                    <img src={logo} alt=" " width="45" height="45" />
                     <Typography variant="h5" className={styles.headerTitle}>
                         Notes
                     </Typography>

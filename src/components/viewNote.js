@@ -39,7 +39,7 @@ function ViewNote(props){
                     <p className="date">{"Update on "+new Intl.DateTimeFormat('en-US', {timeStyle:'short',dateStyle:'medium'}).format(new Date(Date.parse(props.note.doc.updatedAt)))}</p>
                     <Tooltip TransitionComponent={Zoom} title="Delete This Note">
                         <IconButton aria-label="Delete Note" style={{marginLeft:'auto'}} onClick={(e)=>{setDeleteDialoge(true)}}>
-                            <Delete/>
+                            <Delete color="#FC3D39"/>
                         </IconButton>
                     </Tooltip>
                     </Grid>

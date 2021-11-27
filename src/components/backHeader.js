@@ -3,6 +3,7 @@ import {AppBar, Typography,makeStyles,Toolbar,IconButton,Grid} from '@material-u
 import {ArrowBack} from '@material-ui/icons';
 import {useHistory} from 'react-router-dom';
 import '../App.css';
+import logo from '../assets/notesLogo.png'
 
 function BackHeader(props){
     const styles=useStyles();
@@ -26,7 +27,7 @@ function BackHeader(props){
                         </Grid>
                         :
                         <>
-                        <img src={require('../shared/images/notesLogo.png')} alt=" " width="45" height="45" />
+                        <img src={logo} alt=" " width="45" height="45" />
                         <Typography variant="h5" className={styles.headerTitle}>
                             Notes
                         </Typography>

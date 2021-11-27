@@ -3,9 +3,10 @@ const path = require('path');
 const isDev = require("electron-is-dev");
 
 let mainWindow;
-let splash;
+// let splash;
 
 function createWindow() {
+    const iconPath=isDev? path.join(__dirname,"notesLogo.png"): path.join(__dirname,"../build/notesLogo.png")
     const startUrl = isDev? "http://localhost:3000": `file://${path.join(__dirname, "../build/index.html")}`
     console.log(startUrl);
     mainWindow = new BrowserWindow({
@@ -13,22 +14,24 @@ function createWindow() {
         height: 715,
         webPreferences: {
             spellcheck: false,
+            nodeIntegration: true,
         },
         show: false,
         backgroundColor: '#f5f5f5',
+        icon: iconPath,
     });
-    splash = new BrowserWindow({
-        width: 900,
-        height: 715,
-        transparent: true,
-    })
-    splash.setMenuBarVisibility(false)
-    splash.loadURL(__dirname + '/icon.html');
+    // splash = new BrowserWindow({
+    //     width: 900,
+    //     height: 715,
+    //     transparent: true,
+    // })
+    // splash.setMenuBarVisibility(false)
+    // splash.loadURL(__dirname + '/icon.html');
     mainWindow.setMenuBarVisibility(false);
     mainWindow.setBackgroundColor('#f5f5f5')
     mainWindow.loadURL(startUrl);
     mainWindow.once('ready-to-show', () => {
-        splash.destroy();
+        // splash.destroy();
         mainWindow.show();
     })
     mainWindow.on('closed', () => {
